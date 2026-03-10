@@ -151,7 +151,7 @@ function Footer() {
 
 export default function Layout() {
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50">
+    <div className="min-h-screen flex flex-col bg-stone-50 overflow-x-hidden">
       <Navbar />
       <main className="flex-grow pt-16 sm:pt-20">
         <Outlet />

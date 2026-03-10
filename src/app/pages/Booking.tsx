@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { ArrowRight, ArrowLeft, Check, Calendar, Users, Home, Sparkles } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function Booking() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     destination: "",
@@ -53,8 +54,7 @@ export default function Booking() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thank you for your booking request! Our travel specialists will contact you within 24 hours to finalize your luxury travel experience.");
-    // In a real app, this would submit to a backend
+    navigate('/booking-success');
   };
 
   return (
@@ -71,28 +71,38 @@ export default function Booking() {
       {/* Progress Bar */}
       <div className="bg-white border-b border-stone-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-          <div className="flex items-center justify-between mb-2">
-            {[1, 2, 3].map((num) => (
-              <div key={num} className="flex items-center flex-1">
-                <div className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 transition-all ${
-                  step >= num 
-                    ? 'bg-stone-900 border-stone-900 text-white' 
-                    : 'border-stone-300 text-stone-400'
-                }`}>
-                  {step > num ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : num}
+          <div className="relative">
+            {/* Background Line */}
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-stone-300 -translate-y-1/2" />
+            
+            {/* Active Line */}
+            <div 
+              className="absolute top-1/2 left-0 h-0.5 bg-stone-900 -translate-y-1/2 transition-all duration-300" 
+              style={{ width: `${((step - 1) / 2) * 100}%` }} 
+            />
+
+            <div className="relative flex items-center justify-between">
+              {[
+                { num: 1, label: 'Destination' },
+                { num: 2, label: 'Preferences' },
+                { num: 3, label: 'Details' }
+              ].map(({ num, label }) => (
+                <div key={num} className="flex flex-col items-center relative z-10 w-fit">
+                  <div className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 bg-white transition-all duration-300 ${
+                    step >= num 
+                      ? 'border-stone-900 text-stone-900' 
+                      : 'border-stone-300 text-stone-400'
+                  } ${step > num ? 'bg-stone-900 text-white' : ''} ${step === num ? 'bg-stone-900 text-white border-stone-900' : ''}`}>
+                    {step > num ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : num}
+                  </div>
+                  <span className={`absolute top-full mt-2 text-xs sm:text-sm text-center w-max -translate-x-1/2 left-1/2 ${
+                    step === num ? 'font-medium text-stone-900' : 'text-stone-600'
+                  }`}>
+                    {label}
+                  </span>
                 </div>
-                {num < 3 && (
-                  <div className={`flex-1 h-0.5 mx-2 sm:mx-4 transition-all ${
-                    step > num ? 'bg-stone-900' : 'bg-stone-300'
-                  }`} />
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-between text-xs sm:text-sm text-stone-600 mt-2">
-            <span className={step === 1 ? 'font-medium text-stone-900' : ''}>Destination</span>
-            <span className={step === 2 ? 'font-medium text-stone-900' : ''}>Preferences</span>
-            <span className={step === 3 ? 'font-medium text-stone-900' : ''}>Details</span>
+              ))}
+            </div>
           </div>
         </div>
       </div>

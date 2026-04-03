@@ -2,7 +2,7 @@
 
 LuxeTravel is a premium web application that offers curated luxury travel experiences for the discerning traveler. Designed with a modern, sophisticated aesthetic, the platform allows users to explore handpicked destinations, discover exclusive membership tiers, and seamlessly book bespoke travel arrangements with access to a 24/7 personalized concierge service.
 
-##  Features
+##  FeaturesS
 
 *   **Responsive & Elegant UI/UX:** A stunning, fully-responsive design built with Tailwind CSS, ensuring a seamless experience across mobile, tablet, and desktop devices.
 *   **Smooth Animations:** Engaging page transitions and micro-interactions powered by Framer Motion.
